@@ -34,7 +34,7 @@ function setup() {
 
 function draw() {
   background(50);
-  rect(width/2,height/2,50,50);
+  
   // The ultimate bar
   // red rectangle
   push();
