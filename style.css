@@ -3,5 +3,6 @@ html, body {
   padding: 0;
 }
 canvas {
+  margin: 50;
   display: block;
 }
