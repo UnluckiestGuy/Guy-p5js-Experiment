@@ -1,13 +1,13 @@
 html, body {
   margin: 0;
   padding: 0;
-  color: rgb(100,100,100);
+  background-color: rgb(100,100,100);
 }
 h1 {
   position: fixed;
-  top: 10%;
+  top: 5%;
   left: 50%;
-  transform: translate(-50%, -10%);
+  transform: translate(-50%, -5%);
   text-align: center;
   font-size: 40px;
   font-family: Arial;
