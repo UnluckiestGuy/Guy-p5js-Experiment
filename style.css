@@ -4,10 +4,10 @@ html, body {
   background-color: rgb(100,100,100);
 }
 h1 {
-  position: fixed;
-  top: 5%;
-  left: 50%;
-  transform: translate(-50%, -5%);
+  padding: 0;
+  margin: auto;
+  display: block;
+  width: 800px;
   text-align: center;
   font-size: 40px;
   font-family: Arial;
