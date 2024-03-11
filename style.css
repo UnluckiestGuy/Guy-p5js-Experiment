@@ -1,6 +1,7 @@
 html, body {
   margin: 0;
   padding: 0;
+  color: rgb(100,100,100);
 }
 h1 {
   position: fixed;
