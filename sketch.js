@@ -1,15 +1,5 @@
-/*
-I added
-1. More aliens over time (87-97)
-2. An ultimate (38-48 && 148-180)
-3. Aliens go back to the top if they fall off the screen, and if a laser goes past the top, delete it (99-105 && 141-146)
-4. Strikes and a game over (115-139 && 193-196)
-5. A score (107-113)
-*/
-
 let lasers = [];
 let aliens = [];
-let player1;
 let pFrameCount = 0;
 let ultCharge = 300;
 let ulting = false;
@@ -19,6 +9,7 @@ let strikes = 0;
 let score = 0;
 let playerX = 200;
 let playing = false;
+let digitSpacing;
 
 function setup() {
   createCanvas(400, 400);
@@ -63,10 +54,10 @@ function draw() {
       playerX += 5;
     }
     if (playerX < 0+10) {
-      playerX = 10;
+      playerX = 12.5;
     }
     if (playerX > width-10) {
-      playerX = width-10;
+      playerX = width-12.5;
     }
     circle(playerX, height - 30, 25);
   
@@ -122,11 +113,17 @@ function draw() {
     }
 
     // displays the score
+    if (score >= 100) {
+      digitSpacing = width-25;
+    }
+    else {
+      digitSpacing = width-20;
+    }
     push();
     textAlign(CENTER);
     textFont("impact",30);
     fill(255);
-    text(str(score),width-20,30)
+    text(str(score),digitSpacing,30)
     pop();
 
     // displays the strikes
