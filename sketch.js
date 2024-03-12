@@ -6,7 +6,7 @@ let ulting = false;
 let cooldown = 0;
 let gameOverBool = false;
 let strikes = 0;
-let score = 90;
+let score = 0;
 let playerX = 200;
 let playing = false;
 let digitSpacing;
@@ -117,7 +117,7 @@ function draw() {
     textAlign(RIGHT);
     textFont("impact",30);
     fill(255);
-    text(str(score),width-7.5,32.5)
+    text(str(score),width-7.5,32.25)
     pop();
 
     // displays the strikes
