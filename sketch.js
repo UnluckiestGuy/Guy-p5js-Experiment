@@ -10,9 +10,12 @@ let score = 0;
 let playerX = 200;
 let playing = false;
 let digitSpacing;
+let speed = 2;
+let egg;
 
 function setup() {
   createCanvas(400, 400);
+  frameRate(60);
   
   //spawn 5 aliens
   for (let i = 0; i < 5; i++) {
@@ -26,14 +29,20 @@ function setup() {
 
 function draw() {
   background(50);
+  // the start screen
   if (playing == false) {
     push();
     textAlign(CENTER);
     textFont("impact",40);
     fill(255);
-    text("START?",width/2,height/2);
+    text("PRESS NUM TO START",width/2,height/2-50);
+    textSize(35);
+    text("1: Slow",width/5,height/4*3-65);
+    text("2: Medium",width/2,height/9*8-65);
+    text("3: Fast",width/5*4,height/4*3-65);
     pop();
   }
+  
   if (playing == true) {
     // The ultimate bar
     // red rectangle
@@ -47,29 +56,34 @@ function draw() {
     rect(width/16-12.5,height/2-150,25,ultCharge);
     pop();
   
+    // the movement
     if (kb.pressing("A")) {
-      playerX -= 5;
+      playerX -= 5 + speed;
     }
     if (kb.pressing("D")) {
-      playerX += 5;
+      playerX += 5 + speed;
     }
+    
+    // this stop the player from going off the screen
     if (playerX < 0+10) {
       playerX = 12.5;
     }
     if (playerX > width-10) {
       playerX = width-12.5;
     }
+    
+    // draws the player
     circle(playerX, height - 30, 25);
   
-    // draws lasers
+    // draws all the lasers
     for (let laser of lasers) {
-      laser.y -= 5;
+      laser.y -= 5 + speed;
       circle(laser.x, laser.y, 10);
     }
   
-    // draws aliens
+    // draws all the aliens
     for (let alien of aliens) {
-      alien.y = alien.y + 3;
+      alien.y = alien.y + 3 + speed;
       square(alien.x, alien.y, 30);
       }
   
@@ -112,6 +126,13 @@ function draw() {
       }
     }
 
+    // if the laser goes past the top of the screen, delete it
+    for (let laser of lasers) {
+      if (laser.y<-10) {
+        lasers.splice(lasers.indexOf(laser), 1);
+      }
+    }
+
     // displays the score
     push();
     textAlign(RIGHT);
@@ -146,16 +167,9 @@ function draw() {
       pop();
     }
 
-    // if the laser goes past the top of the screen, delete it
-    for (let laser of lasers) {
-      if (laser.y<-10) {
-        lasers.splice(lasers.indexOf(laser), 1);
-      }
-    }
-
     // the ult
     if (ulting) {
-      if (cooldown == 5) {
+      if (cooldown == 5 - speed) {
        let lLaser = {
         x: playerX-10,
         y: height-40,
@@ -174,11 +188,34 @@ function draw() {
       ulting = false;
     }
   }
+  easterEggText();
 }
 
-//
 function keyPressed() {
-  // keycode 16 = shift activates ult
+  // the starting options
+  if (playing == false) {
+    if (keyCode == 49) { // keycode 49 is 1
+      speed = 0;
+      playing = true;
+    }
+    else if (keyCode == 50) { // keycode 50 is 2
+      speed = 1;
+      playing = true;
+    }
+    else if (keyCode == 51) { // keycode 51 is 3
+      speed = 2;
+      playing = true;
+    }
+    else if (keyCode == 52) { // keycode 52 is 4
+      speed = 10;
+      egg = true;
+      setTimeout(() => {
+        egg = false;
+        playing = true; 
+      }, 2000);
+    }
+  }
+  // keycode 16 = shift; activates ult
   if (keyCode == 16) {
     if (ultCharge == 0) {
       if (gameOverBool == false) {
@@ -186,7 +223,7 @@ function keyPressed() {
       }
     }
   }
-  // space
+  // keycode 32 = space; fires a laser
   if (keyCode == 32) {
     if (gameOverBool == false) {
       let laser = {
@@ -198,13 +235,21 @@ function keyPressed() {
   }
 }
 
-function mousePressed() {
-  if (playing == false) {
-    playing = true;
-  }
-}
 
+// self-explanatory; called when strikes reaches 3
 function gameOver() {
   gameOverBool = true;
   aliens.splice(0,aliens.length);
+}
+
+function easterEggText() {
+  if (egg == true) {
+    push();
+    background(50);
+    fill(255);
+    textAlign(CENTER);
+    textFont("Impact",50);
+    text("You found an \n easter egg! \n TURBO MODE!!!!!",width/2,height/2-50)
+    pop();
+  }
 }
