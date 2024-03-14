@@ -10,7 +10,8 @@ let score = 0;
 let playerX = 200;
 let playing = false;
 let digitSpacing;
-let speed = 2;
+let speed;
+let ultSpeed;
 let egg;
 
 function setup() {
@@ -159,17 +160,36 @@ function draw() {
 
     // the gameover text
     if (gameOverBool == true) {
-      push();
-      textAlign(CENTER);
-      textFont("impact",40);
-      fill(255);
-      text("GAME OVER",width/2,height/2);
-      pop();
+      if (speed != 10) {
+        push();
+        textAlign(CENTER);
+        textFont("impact",40);
+        fill(255);
+        text("GAME OVER",width/2,height/2);
+        pop();
+      }
+      if (speed == 10) {
+        push();
+        textAlign(CENTER);
+        textFont("impact",40);
+        fill(255);
+        text("GAME OVER",width/2,height/2);
+        textFont("Arial");
+        textStyle(BOLD);
+        text(">:D",width/2,height/2+50);
+        pop();
+      }
     }
 
     // the ult
     if (ulting) {
-      if (cooldown == 5 - speed) {
+      if (speed != 10) {
+        ultSpeed = 6 - speed
+      }
+      else {
+        ultSpeed = 1;
+      }
+      if (cooldown == ultSpeed) {
        let lLaser = {
         x: playerX-10,
         y: height-40,
@@ -182,7 +202,12 @@ function draw() {
         cooldown = 0;
       }
       cooldown++;
-      ultCharge+=2;
+      if (speed != 10) {
+        ultCharge+=2;
+      }
+      else {
+        ultCharge+=5;
+      }
     }
     if (ultCharge == 300) {
       ulting = false;
@@ -195,15 +220,15 @@ function keyPressed() {
   // the starting options
   if (playing == false) {
     if (keyCode == 49) { // keycode 49 is 1
-      speed = 0;
-      playing = true;
-    }
-    else if (keyCode == 50) { // keycode 50 is 2
       speed = 1;
       playing = true;
     }
-    else if (keyCode == 51) { // keycode 51 is 3
+    else if (keyCode == 50) { // keycode 50 is 2
       speed = 2;
+      playing = true;
+    }
+    else if (keyCode == 51) { // keycode 51 is 3
+      speed = 3;
       playing = true;
     }
     else if (keyCode == 52) { // keycode 52 is 4
@@ -249,7 +274,10 @@ function easterEggText() {
     fill(255);
     textAlign(CENTER);
     textFont("Impact",50);
-    text("You found an \n easter egg! \n TURBO MODE!!!!!",width/2,height/2-50)
+    text("You found an",width/2,height/2-50)
+    text("easter egg!",width/2,height/2);
+    fill(255,50,50);
+    text("TURBO MODE!!!!!",width/2,height/2+50);
     pop();
   }
 }
