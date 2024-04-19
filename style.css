@@ -24,6 +24,13 @@ h2 {
   left: 50%;
   transform: translate(-50%, -90%);
 }
+h3 {
+  font-family: Arial;
+  position: fixed;
+  top: 50%;
+  left: 80%;
+  transform: translate(-80%, -50%);
+}
 canvas {
   position: fixed;
   top: 50%;
