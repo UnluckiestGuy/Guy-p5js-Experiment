@@ -28,8 +28,8 @@ h3 {
   font-family: Arial;
   position: fixed;
   top: 50%;
-  left: 80%;
-  transform: translate(-80%, -50%);
+  left: 90%;
+  transform: translate(-90%, -50%);
 }
 canvas {
   position: fixed;
