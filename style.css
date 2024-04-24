@@ -29,8 +29,8 @@ h3 {
   font-size: 30px;
   position: fixed;
   top: 50%;
-  left: 80%;
-  transform: translate(-80%, -50%);
+  left: 83%;
+  transform: translate(-83%, -50%);
 }
 canvas {
   position: fixed;
