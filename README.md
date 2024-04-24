@@ -1,2 +1,4 @@
 # Guy-p5js-Experiment
-Trying to get a p5js sketch onto a website
+This is where I experiment with Github's pages and other functionalities
+I plan to submit this as my final for Cybersecurity class
+Made by Colton C.
