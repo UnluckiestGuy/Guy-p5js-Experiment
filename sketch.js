@@ -1,4 +1,7 @@
-let lasers = [];
+// if you're reading this, press 4 at the start for funny
+
+// all the variables used throughout the whole code
+let lasers = []; // having it set to just [] makes it an empty array (aka a group or list) that things can be added to
 let aliens = [];
 let pFrameCount = 0;
 let ultCharge = 300;
@@ -8,19 +11,20 @@ let gameOverBool = false;
 let strikes = 0;
 let score = 0;
 let playing = false;
-let digitSpacing;
+let digitSpacing; // you don't have to set them to anything, which leaves them as Undefined
 let speed;
 let ultSpeed;
 let egg;
 
 function setup() {
   createCanvas(400, 400);
-  
+
+  // creates the ship
   spaceshipSprite = new Sprite(width/2, height-30);
   spaceshipSprite.img = loadImage("Images/Spaceship.png");
   spaceshipSprite.visible = false;
   
-  //spawn 5 aliens
+  // spawn 5 aliens
   for (let i = 0; i < 5; i++) {
     alienSprite = new Sprite();
     alienSprite.img = loadImage("Images/ufo.png");
@@ -51,13 +55,12 @@ function draw() {
   if (playing == true) {
     spaceshipSprite.visible = true;
     spaceshipSprite.rotation = 0;
+    
     // The ultimate bar
-    // red rectangle
     push();
     fill(255,100,100);
     rectMode(CENTER);
     rect(width/16,height/2,25,300);
-    // white rectangle
     rectMode(CORNER);
     fill(255);
     rect(width/16-12.5,height/2-150,25,ultCharge);
@@ -71,7 +74,7 @@ function draw() {
       spaceshipSprite.x += 5 + speed;
     }
     
-    // this stop the player from going off the screen
+    // this stops the player from going off the screen
     if (spaceshipSprite.x < 0+12.5) {
       spaceshipSprite.x = 0+12.5;
     }
@@ -94,22 +97,25 @@ function draw() {
       alien.rotation = 0;
     }
   
-    // deals with killing aliens
-    for (let alien of aliens) {
-      for (let laser of lasers) {
-        if (dist(alien.x, alien.y, laser.x, laser.y) < 30) {
-          alien.life = 0;
+    // deals with killing aliens and adding score
+    for (let alien of aliens) { // do this once for every thing in the "aliens" array
+      for (let laser of lasers) { // do this once for every thing in the "lasers" array
+        if (dist(alien.x, alien.y, laser.x, laser.y) < 30) { // if the laser and the alien in question are overlapping
+          alien.life = 0; // alien begone
+          // take the alien and laser out of their respective arrays
           aliens.splice(aliens.indexOf(alien), 1);
           lasers.splice(lasers.indexOf(laser), 1);
-          
+
+          // make a new alien to replace the old one
           newAlienSprite = new Sprite();
           newAlienSprite.img = loadImage("Images/ufo.png");
           newAlienSprite.x = random(100,width-50);
           newAlienSprite.y = random(-1000, -35);
           newAlienSprite.overlaps(spaceshipSprite);
           newAlienSprite.layer = 2;
-          aliens.push(newAlienSprite);
-          score++;
+          aliens.push(newAlienSprite); // put the new alien in the "aliens" array
+          score++; // increase the score by 1
+          // increase the ult charge if it isn't full and if it isn't being used
           if (ultCharge > 0 && ulting == false) {
           ultCharge -= 20;
           }
@@ -117,8 +123,8 @@ function draw() {
       }
     }
 
-    // Every 10 seconds, add one alien to the total
-    if (gameOverBool == false) {
+    // every 10 seconds, add one alien to the total
+    if (gameOverBool == false) { // if the game isn't gameovered
       if (frameCount - pFrameCount >= 600) {
         alienSprite = new Sprite();
         alienSprite.img = loadImage("Images/ufo.png");
@@ -131,7 +137,7 @@ function draw() {
       }
     }
 
-    // If an alien goes past the bottom of the screen, send it back to the top and add a strike
+    // if an alien goes past the bottom of the screen, send it back to the top and add a strike
     for (let alien of aliens) {
       if (alien.y > height+50) {
         alien.y = random(-500, -35);
@@ -158,7 +164,7 @@ function draw() {
     push();
     stroke(255,0,0);
     strokeWeight(5);
-    for (let i = 0; i < strikes; i++) {
+    for (let i = 0; i < strikes; i++) { // do this as many times as there are strikes
       line(16,16,36,36);
       line(16,36,36,16);
       translate(30,0);
@@ -201,7 +207,7 @@ function draw() {
       else {
         ultSpeed = 1;
       }
-      if (cooldown == ultSpeed) {
+      if (cooldown == ultSpeed) { // fire the lasers at a specific rate instead of every frame
        let lLaser = {
         x: spaceshipSprite.x-10,
         y: height-40,
@@ -210,7 +216,7 @@ function draw() {
         x: spaceshipSprite.x+10,
         y: height-40,
       };
-        lasers.push(lLaser,rLaser);
+        lasers.push(lLaser,rLaser); // add these lasers to the "lasers" array
         cooldown = 0;
       }
       cooldown++;
@@ -246,6 +252,7 @@ function keyPressed() {
     else if (keyCode == 52) { // keycode 52 is 4
       speed = 10;
       egg = true;
+      // setTimeout lets you do something after a delay, which in this case is 2000 milliseconds, or 2 seconds
       setTimeout(() => {
         egg = false;
         playing = true; 
