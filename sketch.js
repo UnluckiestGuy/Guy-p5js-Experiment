@@ -344,7 +344,7 @@ function gameOver() {
   gameOverBool = true;
   
   restartButton = createButton("RESTART?")
-  restartButton.position(width/1.363,height/4*3);
+  restartButton.position(width/1.545,height/4*3);
   restartButton.mousePressed(restart);
   
   // kill all aliens
