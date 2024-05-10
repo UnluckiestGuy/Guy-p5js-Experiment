@@ -16,8 +16,6 @@ let ultSpeed;
 let egg;
 let lasered = false;
 let kaboomFrames = [];
-let restartButton;
-let restartButtonExists;
 
 function preload() {
   // the sound effect of the laser
@@ -296,6 +294,25 @@ function draw() {
     }
   }
   easterEggText();
+  
+  // the restart button
+  if (gameOverBool == true) {
+    push();
+    rectMode(CENTER);
+    rect(width/2,height/2+75,100,25)
+    textAlign(CENTER);
+    textSize(16);
+    text("RESTART?",width/2,height/2+80)
+    pop();
+    // if you click in the area of the button
+    if (mouseIsPressed) {
+      if (mouseX > width/2-50 && mouseX < width/2+50) {
+        if (mouseY > height/2+75-12.5 && mouseY < height/2+75+12.5) {
+          restart();
+        }
+      }
+    }
+  }
   lasered = false;
 } // ------------------------- draw end -------------------------
 
@@ -342,10 +359,6 @@ function keyPressed() {
 // self-explanatory; called when strikes reaches 3
 function gameOver() {  
   gameOverBool = true;
-  
-  restartButton = createButton("RESTART?")
-  restartButton.position(width/1.545,height/4*3);
-  restartButton.mousePressed(restart);
   
   // kill all aliens
   for (let alien of aliens) {
@@ -407,7 +420,6 @@ function kaboom(sprite) {
 
 function restart() {
   allSprites.remove();
-  restartButton.remove();
   // resetting almost all the variables (some shouldn't be reset)
   lasers = [];
   aliens = [];
