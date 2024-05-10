@@ -1,4 +1,4 @@
-// if you're reading this, press 4 at the start for funny
+// if you're reading this, press 4 at the start
 
 let lasers = []; // having it set to just [] makes it an empty array (aka a group or list) that things can be added to
 let aliens = [];
@@ -14,8 +14,9 @@ let digitSpacing; // if not set to anything, it will stay as a special value cal
 let speed;
 let ultSpeed;
 let egg;
-let lasered = false;
+let sounded = false;
 let kaboomFrames = [];
+let egged;
 
 function preload() {
   // the sound effect of the laser
@@ -38,6 +39,7 @@ function preload() {
 
 function setup() {
   createCanvas(400, 400);
+  frameRate(60);
 
   // creates the ship
   spaceshipSprite = new Sprite(width / 2, height - 30);
@@ -109,8 +111,8 @@ function draw() {
     if (spaceshipSprite.x < 0 + 12.5 + 50) {
       spaceshipSprite.x = 0 + 12.5 + 50;
     }
-    if (spaceshipSprite.x > width - 10) {
-      spaceshipSprite.x = width - 12.5;
+    if (spaceshipSprite.x > width - 25) {
+      spaceshipSprite.x = width - 25;
     }
 
     // draws all the lasers
@@ -136,7 +138,10 @@ function draw() {
         if (dist(alien.x, alien.y, laser.x, laser.y) < 30) {
           // if the laser and the alien in question are overlapping
           alien.life = 0; // alien begone
-          alienDeathSound.start();
+          if (sounded == false) {
+            alienDeathSound.start();
+            sounded = true;
+          }
           // take the alien and laser out of their respective arrays
           aliens.splice(aliens.indexOf(alien), 1);
           lasers.splice(lasers.indexOf(laser), 1);
@@ -247,9 +252,9 @@ function draw() {
           };
           lasers.push(laser);
           // prevents the laser sound from being called twice in the same frame (breaks the game)
-          if (lasered == false) {
+          if (sounded == false) {
             laserSound.start();
-            lasered = true;
+            sounded = true;
           }
         }
       }
@@ -274,9 +279,9 @@ function draw() {
             y: height - 40,
           };
           // prevents the laser sound from being called twice in the same frame (breaks the game)
-          if (lasered == false) {
+          if (sounded == false) {
             laserSound.start();
-            lasered = true;
+            sounded = true;
           }
           lasers.push(lLaser, rLaser); // add these lasers to the "lasers" array
           cooldown = 0;
@@ -313,7 +318,7 @@ function draw() {
       }
     }
   }
-  lasered = false;
+  sounded = false;
 } // ------------------------- draw end -------------------------
 
 function keyPressed() {
@@ -339,11 +344,16 @@ function keyPressed() {
       // keycode 52 is 4
       speed = 10;
       egg = true;
+      let temporaryDelay = 2000
+      if (egged == true) {
+        temporaryDelay = 0;
+      }
       // setTimeout lets you do something after a delay, which in this case is 2000 milliseconds, or 2 seconds
       setTimeout(() => {
         egg = false;
         playing = true;
-      }, 2000);
+      }, temporaryDelay);
+      egged = true;
     }
   }
   // keycode 16 = shift; activates ult
@@ -369,7 +379,10 @@ function gameOver() {
   aliens.splice(0, aliens.length);
 
   // play the death sound and replace the player's image with the explosion animation
-  playerDeathSound.start();
+  if (sounded == false) {
+    playerDeathSound.start();
+    sounded = true;
+  }
   kaboom(spaceshipSprite);
   // stops the death sound early
   setTimeout(() => {
