@@ -23,10 +23,12 @@ function preload() {
   laserSound = new Tone.Player("Sounds/laserSound.wav").toDestination();
   laserSound.volume.value = -10;
 
+  // the sound effect of the aliens dying
   alienDeathSound = new Tone.Player("Sounds/alienDeath.wav").toDestination();
   alienDeathSound.playbackRate = 3;
   alienDeathSound.volume.value = -10;
 
+  // the sound effect of the player exploding
   playerDeathSound = new Tone.Player("Sounds/kaboom.mp3").toDestination();
   playerDeathSound.playbackRate = 1.3;
   playerDeathSound.pitch = 2;
@@ -318,33 +320,34 @@ function draw() {
       }
     }
   }
+  
+  // there's a glitch where aliens are removed from the array, but still exist, in which they get pushed around and rotated, so this should delete those lost aliens, because if they were in the array, their rotation would be reset to 0 every frame
+  for (let sprite of allSprites) {
+    if (sprite.rotation != 0) {
+      sprite.remove();
+    }
+  }
+  
   sounded = false;
 } // ------------------------- draw end -------------------------
 
 function keyPressed() {
-  if (keyCode == 71) {
-    // keycode 71 is g
-    // I use this for debugging sounds
-  }
   // the starting options
   if (playing == false) {
-    if (keyCode == 49) {
-      // keycode 49 is 1
+    if (keyCode == 49 && egg != true) {        // keycode 49 is 1
       speed = 2;
       playing = true;
-    } else if (keyCode == 50) {
-      // keycode 50 is 2
+    } else if (keyCode == 50 && egg != true) { // keycode 50 is 2
       speed = 3;
       playing = true;
-    } else if (keyCode == 51) {
-      // keycode 51 is 3
+    } else if (keyCode == 51 && egg != true) { // keycode 51 is 3
       speed = 4;
       playing = true;
-    } else if (keyCode == 52) {
-      // keycode 52 is 4
+    } else if (keyCode == 52) { // keycode 52 is 4
       speed = 10;
       egg = true;
       let temporaryDelay = 2000
+      // this is so that if you're repeatedly doing turbo runs and restarting, you don't have to do the "cutscene" every time; also accidentally allows you to skip the first "cutscene" by pressing it twice
       if (egged == true) {
         temporaryDelay = 0;
       }
