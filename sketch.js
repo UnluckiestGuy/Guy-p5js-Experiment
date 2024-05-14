@@ -130,6 +130,7 @@ function draw() {
     for (let alien of aliens) {
       alien.y = alien.y + 3 + speed;
       alien.rotation = 0;
+      alien.img = loadImage("Images/ufo.png");
     }
 
     // deals with killing aliens and adding score
