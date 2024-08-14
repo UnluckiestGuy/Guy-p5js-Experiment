@@ -126,11 +126,12 @@ function draw() {
       pop();
     }
 
-    // for all the aliens, move them downward, keep them rotated straight, and make them invisible if the game is overed
+    // for all the aliens, move them downward, keep them rotated straight, and make them invisible if the game is overed, also put a circle behind them
     for (let alien of aliens) {
       alien.y = alien.y + 3 + speed;
       alien.rotation = 0;
       alien.img = loadImage("Images/ufo.png");
+      circle(alien.x,alien.y,10);
     }
 
     // deals with killing aliens and adding score
