@@ -17,6 +17,7 @@ let egg;
 let sounded = false;
 let kaboomFrames = [];
 let egged;
+let loading = true;
 
 function preload() {
   // the sound effect of the laser
@@ -46,6 +47,9 @@ function preload() {
 function setup() {
   createCanvas(400, 400);
   frameRate(60);
+  setTimeout(() => {
+    loading = false;
+  }, 3000) // for the 3 second loading screen
 
   // creates the ship
   spaceshipSprite = new Sprite(width / 2, height - 30);
@@ -72,19 +76,29 @@ function draw() {
   background(50);
   // the start screen
   if (playing == false) {
-    push();
-    textAlign(CENTER);
-    textFont("impact", 40);
-    fill(255);
-    text("PRESS NUM TO START", width / 2, height / 2 - 50);
-    textSize(35);
-    fill(0,255,0);
-    text("1: Slow", width / 5, (height / 4) * 3 - 65);
-    fill(255,255,0);
-    text("2: Medium", width / 2, (height / 9) * 8 - 65);
-    fill(255,50,50);
-    text("3: Fast", (width / 5) * 4, (height / 4) * 3 - 65);
-    pop();
+    if (loading == true) { // loading screen
+      push();
+      textAlign(CENTER);
+      textFont("impact", 40);
+      fill(255);
+      text("Loading...", width/2, height/2);
+      pop();
+    }
+    if (loading == false) { // title screen
+      push();
+      textAlign(CENTER);
+      textFont("impact", 40);
+      fill(255);
+      text("PRESS NUM TO START", width / 2, height / 2 - 50);
+      textSize(35);
+      fill(0,255,0);
+      text("1: Slow", width / 5, (height / 4) * 3 - 65);
+      fill(255,255,0);
+      text("2: Medium", width / 2, (height / 9) * 8 - 65);
+      fill(255,50,50);
+      text("3: Fast", (width / 5) * 4, (height / 4) * 3 - 65);
+      pop();
+    }
   }
 
   if (playing == true) {
@@ -339,7 +353,7 @@ function draw() {
 
 function keyPressed() {
   // the starting options
-  if (playing == false) {
+  if (playing == false && loading == false) {
     if (keyCode == 49 && egg != true) {        // keycode 49 is 1
       speed = 2;
       playing = true;
