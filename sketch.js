@@ -37,6 +37,10 @@ function preload() {
   for (let i = 0; i <= 16; i++) {
     kaboomFrames[i] = loadImage("Images/kaboomFrames/boomFrame" + i + ".png");
   }
+  
+  spaceshipImg = loadImage("Images/spaceship.png");
+  
+  ufoImg = loadImage("Images/ufo.png")
 }
 
 function setup() {
@@ -45,7 +49,7 @@ function setup() {
 
   // creates the ship
   spaceshipSprite = new Sprite(width / 2, height - 30);
-  spaceshipSprite.img = loadImage("Images/Spaceship.png");
+  spaceshipSprite.img = spaceshipImg;
   spaceshipSprite.visible = false;
   
   idleAni = spaceshipSprite.addAni("idle",spaceshipSprite.img)
@@ -55,7 +59,7 @@ function setup() {
   // spawn 5 aliens
   for (let i = 0; i < 5; i++) {
     alienSprite = new Sprite();
-    alienSprite.img = loadImage("Images/ufo.png");
+    alienSprite.img = ufoImg;
     alienSprite.x = random(100, width - 50);
     alienSprite.y = random(-1000, -35);
     alienSprite.overlaps(spaceshipSprite);
@@ -130,8 +134,8 @@ function draw() {
     for (let alien of aliens) {
       alien.y = alien.y + 3 + speed;
       alien.rotation = 0;
-      alien.img = loadImage("Images/ufo.png");
-      circle(alien.x,alien.y,10);
+      alien.img = ufoImg;
+      circle(alien.x,alien.y,18);
     }
 
     // deals with killing aliens and adding score
@@ -152,7 +156,7 @@ function draw() {
 
           // make a new alien to replace the old one
           newAlienSprite = new Sprite();
-          newAlienSprite.img = loadImage("Images/ufo.png");
+          newAlienSprite.img = ufoImg;
           newAlienSprite.x = random(100, width - 50);
           newAlienSprite.y = random(-1000, -35);
           newAlienSprite.overlaps(spaceshipSprite);
@@ -172,7 +176,7 @@ function draw() {
       // if the game isn't gameovered
       if (frameCount - pFrameCount >= 600) {
         alienSprite = new Sprite();
-        alienSprite.img = loadImage("Images/ufo.png");
+        alienSprite.img = ufoImg;
         alienSprite.x = random(100, width - 50);
         alienSprite.y = random(-1000, -35);
         alienSprite.overlaps(spaceshipSprite);
