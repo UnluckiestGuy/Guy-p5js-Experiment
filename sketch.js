@@ -1,3 +1,5 @@
+// on github, it breaks if you fire while moving too soon
+
 // if you're reading this, press 4 at the start
 
 let lasers = []; // having it set to just [] makes it an empty array (aka a group or list) that things can be added to
@@ -49,7 +51,7 @@ function setup() {
   frameRate(60);
   setTimeout(() => {
     loading = false;
-  }, 3000) // for the 3 second loading screen
+  }, 5000) // for the 5 second loading screen
 
   // creates the ship
   spaceshipSprite = new Sprite(width / 2, height - 30);
@@ -148,7 +150,6 @@ function draw() {
     for (let alien of aliens) {
       alien.y = alien.y + 3 + speed;
       alien.rotation = 0;
-      alien.img = ufoImg;
       push();
       fill("#B6CAE6");
       ellipse(alien.x,alien.y-2,12,7);
@@ -476,7 +477,6 @@ function restart() {
   speed = undefined;
   ultSpeed = undefined;
   egg = undefined;
-  lasered = false;
   // calling setup again
   setup();
 }
