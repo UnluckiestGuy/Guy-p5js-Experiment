@@ -167,6 +167,7 @@ function draw() {
           // if the laser and the alien in question are overlapping
           alien.life = 0; // alien begone
           if (sounded == false) {
+            alienDeathSound.start();
             sounded = true;
           }
           // take the alien and laser out of their respective arrays
@@ -280,6 +281,7 @@ function draw() {
           lasers.push(laser);
           // prevents the laser sound from being called twice in the same frame (breaks the game)
           if (sounded == false) {
+            laserSound.start();
             sounded = true;
           }
         }
@@ -306,6 +308,7 @@ function draw() {
           };
           // prevents the laser sound from being called twice in the same frame (breaks the game)
           if (sounded == false) {
+            laserSound.start();
             sounded = true;
           }
           lasers.push(lLaser, rLaser); // add these lasers to the "lasers" array
@@ -406,6 +409,7 @@ function gameOver() {
 
   // play the death sound and replace the player's image with the explosion animation
   if (sounded == false) {
+    playerDeathSound.start();
     sounded = true;
   }
   kaboom(spaceshipSprite);
