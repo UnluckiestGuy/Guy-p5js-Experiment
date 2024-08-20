@@ -1,7 +1,12 @@
-// on github, it breaks if you fire while moving too soon
+// all my knowledge on The Glitch
+// 1. Only on school laptop
+// 2. Only when sounds are used in the game (having them there but unused doesn't break the game)
+// 3. Only when you fire too soon after starting the game, and by starting the game I mean pressing a number to select difficulty
+// 4. It can't be a loading problem because the sounds should be loading before the selection screen appears, and there's a hard-coded
+//5-second loading screen to give it PLENTY time to load
+// Big Question: Why does playing a sound too soon after Starting break the game, and why only on my school laptop???
 
 // if you're reading this, press 4 at the start
-
 let lasers = []; // having it set to just [] makes it an empty array (aka a group or list) that things can be added to
 let aliens = [];
 let pFrameCount = 0;
