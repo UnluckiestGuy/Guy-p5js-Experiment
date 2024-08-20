@@ -1,10 +1,11 @@
 // all my knowledge on The Glitch
-// 1. Only on school laptop
-// 2. Only when sounds are used in the game (having them there but unused doesn't break the game)
-// 3. Only when you fire too soon after starting the game, and by starting the game I mean pressing a number to select difficulty
-// 4. It can't be a loading problem because the sounds should be loading before the selection screen appears, and there's a hard-coded 5-second loading screen to give it PLENTY time to load
-// 5. Waiting a moment after starting the game will prevent it breaking, but on any difficulty other than slow, you'll just die cus ur not shooting
-// 6. The Turbo Mode "cutscene" doesn't stop it from breaking, even though the time the cutscene takes would prevent the breaking if you waited that long while the game was going
+// 1. Only on the Github Page
+// 2. Only on school laptop
+// 3. Only when sounds are used in the game (having them there but unused doesn't break the game)
+// 4. Only when you fire too soon after starting the game, and by starting the game I mean pressing a number to select difficulty
+// 5. It can't be a loading problem because the sounds should be loading before the selection screen appears, and there's a hard-coded 5-second loading screen to give it PLENTY time to load
+// 6. Waiting a moment after starting the game will prevent it breaking, but on any difficulty other than slow, you'll just die cus ur not shooting
+// 7. The Turbo Mode "cutscene" doesn't stop it from breaking, even though the time the cutscene takes would prevent the breaking if you waited that long while the game was going
 // Big Question: Why does playing a sound too soon after Starting break the game, and why only on my school laptop???
 
 // if you're reading this, press 4 at the start
