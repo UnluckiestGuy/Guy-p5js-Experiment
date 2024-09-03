@@ -1,12 +1,12 @@
 // all my knowledge on The Glitch
 // 1. Only on the Github Page
-// 2. Only on school laptop & STEM laptop
+// 2. Only on school laptop
 // 3. Only when sounds are used in the game (having them there but unused doesn't break the game)
 // 4. Only when you fire too soon after starting the game, and by starting the game I mean pressing a number to select difficulty
 // 5. It can't be a loading problem because the sounds should be loading before the selection screen appears, and there's a hard-coded 5-second loading screen to give it PLENTY time to load
 // 6. Waiting a moment after starting the game will prevent it breaking, but on any difficulty other than slow, you'll just die cus ur not shooting
 // 7. The Turbo Mode "cutscene" doesn't stop it from breaking, even though the time the cutscene takes would prevent the breaking if you waited that long while the game was going
-// Big Question: Why does playing a sound too soon after Starting break the game, and why only on school computers?
+// Big Question: Why does playing a sound too soon after Starting break the game, and why only on my school laptop???
 
 // if you're reading this, press 4 at the start
 let lasers = []; // having it set to just [] makes it an empty array (aka a group or list) that things can be added to
@@ -27,6 +27,7 @@ let sounded = false;
 let kaboomFrames = [];
 let egged;
 let loading = true;
+let muted = false;
 
 function preload() {
   // the sound effect of the laser
@@ -173,9 +174,11 @@ function draw() {
         if (dist(alien.x, alien.y, laser.x, laser.y) < 30) {
           // if the laser and the alien in question are overlapping
           alien.life = 0; // alien begone
-          if (sounded == false) {
-            alienDeathSound.start();
-            sounded = true;
+          if (!muted) {
+            if (sounded == false) {
+              alienDeathSound.start();
+              sounded = true;
+            }
           }
           // take the alien and laser out of their respective arrays
           aliens.splice(aliens.indexOf(alien), 1);
@@ -287,9 +290,11 @@ function draw() {
           };
           lasers.push(laser);
           // prevents the laser sound from being called twice in the same frame (breaks the game)
-          if (sounded == false) {
-            laserSound.start();
-            sounded = true;
+          if (!muted) {
+              if (sounded == false) {
+              laserSound.start();
+              sounded = true;
+            }
           }
         }
       }
@@ -314,9 +319,11 @@ function draw() {
             y: height - 40,
           };
           // prevents the laser sound from being called twice in the same frame (breaks the game)
-          if (sounded == false) {
-            laserSound.start();
-            sounded = true;
+          if (!muted) {
+              if (sounded == false) {
+              laserSound.start();
+              sounded = true;
+            }
           }
           lasers.push(lLaser, rLaser); // add these lasers to the "lasers" array
           cooldown = 0;
@@ -365,6 +372,7 @@ function draw() {
 } // ------------------------- draw end -------------------------
 
 function keyPressed() {
+  
   // the starting options
   if (playing == false && loading == false) {
     if (keyCode == 49 && egg != true) {        // keycode 49 is 1
@@ -392,12 +400,22 @@ function keyPressed() {
       egged = true;
     }
   }
+  
+  
   // keycode 16 = shift; activates ult
   if (keyCode == 16) {
     if (ultCharge == 0) {
       if (gameOverBool == false) {
         ulting = true;
       }
+    }
+  }
+  if (keyCode == 77) {
+    if (muted == false) {
+      muted = true;
+    }
+    else if (muted == true) {
+      muted = false;
     }
   }
 }
@@ -415,9 +433,11 @@ function gameOver() {
   aliens.splice(0, aliens.length);
 
   // play the death sound and replace the player's image with the explosion animation
-  if (sounded == false) {
-    playerDeathSound.start();
-    sounded = true;
+  if (!muted) {
+    if (sounded == false) {
+      playerDeathSound.start();
+      sounded = true;
+    }
   }
   kaboom(spaceshipSprite);
   // stops the death sound early
