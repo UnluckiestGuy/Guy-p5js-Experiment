@@ -59,7 +59,7 @@ function setup() {
   frameRate(60);
   setTimeout(() => {
     loading = false;
-  }, 5000) // for the 5 second loading screen
+  }, 2000) // for the 2 second loading screen
 
   // creates the ship
   spaceshipSprite = new Sprite(width / 2, height - 30);
